@@ -1,0 +1,64 @@
+plugins {
+    // Required for NeoGradle
+    id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+    java.withSourcesJar()
+    java.withJavadocJar()
+
+    repositories {
+        repositories {
+            maven {
+                name = 'Fabric'
+                url = uri("https://maven.fabricmc.net")
+            }
+
+            maven {
+                name = 'Sponge / Mixin'
+                url = 'https://repo.spongepowered.org/repository/maven-public/'
+            }
+
+            maven { url "https://maven.terraformersmc.com/releases/" }
+
+            maven {
+                name 'Xander Maven'
+                url 'https://maven.isxander.dev/releases'
+            }
+
+            maven {
+                name "Nucleoid"
+                url "https://maven.nucleoid.xyz/"
+            }
+
+        }
+    }
+
+    processResources {
+        def expandProps = [
+                "version"                      : version,
+                "group"                        : project.group, //Else we target the task's group.
+                "minecraft_version"            : minecraft_version,
+                "minecraft_version_range"      : minecraft_version_range,
+                "fabric_version"               : fabric_version,
+                "fabric_loader_version"        : fabric_loader_version,
+                "mod_name"                     : mod_name,
+                "mod_author"                   : mod_author,
+                "mod_id"                       : mod_id,
+                "license"                      : license,
+                "description"                  : project.description,
+                "neoforge_version"             : neoforge_version,
+                "neoforge_loader_version_range": neoforge_loader_version_range,
+                "credits"                      : credits,
+                "fabric_minecraft_version"     : fabric_minecraft_version
+        ]
+
+        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
+            expand expandProps
+        }
+        inputs.properties(expandProps)
+    }
+}

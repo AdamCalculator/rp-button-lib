@@ -1,0 +1,42 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea/*
+!.idea/scopes
+
+.settings/
+.vscode/
+bin/
+.classpath
+.project
+# gradle
+build
+.gradle
+*.DS_Store
+
+# other
+eclipse
+run
+runs
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
+
+
+.gradle/
+build/
+out/
+classes/
+/.idea/
+/common/logs/latest.log
